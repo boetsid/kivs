@@ -16,10 +16,6 @@
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="company_id" type="${uuidType}">
-                <constraints nullable="false" />
-            </column>
-
             <column name="company_code" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
@@ -72,7 +68,6 @@
                   separator=";"
                   tableName="company">
             <column name="id" type="numeric"/>
-            <column name="company_id" type="string"/>
             <column name="company_code" type="string"/>
             <column name="company_name" type="string"/>
             <column name="address" type="string"/>

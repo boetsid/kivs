@@ -2,13 +2,6 @@
     "name": "Company",
     "fields": [
         {
-            "fieldName": "companyId",
-            "fieldType": "UUID",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
             "fieldName": "companyCode",
             "fieldType": "String"
         },

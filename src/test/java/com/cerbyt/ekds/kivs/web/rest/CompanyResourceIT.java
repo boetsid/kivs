@@ -20,7 +20,6 @@ import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.util.List;
-import java.util.UUID;
 
 import static com.cerbyt.ekds.kivs.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -33,9 +32,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @SpringBootTest(classes = KivsApp.class)
 public class CompanyResourceIT {
-
-    private static final UUID DEFAULT_COMPANY_ID = UUID.randomUUID();
-    private static final UUID UPDATED_COMPANY_ID = UUID.randomUUID();
 
     private static final String DEFAULT_COMPANY_CODE = "AAAAAAAAAA";
     private static final String UPDATED_COMPANY_CODE = "BBBBBBBBBB";
@@ -97,7 +93,6 @@ public class CompanyResourceIT {
      */
     public static Company createEntity(EntityManager em) {
         Company company = new Company()
-            .companyId(DEFAULT_COMPANY_ID)
             .companyCode(DEFAULT_COMPANY_CODE)
             .companyName(DEFAULT_COMPANY_NAME)
             .address(DEFAULT_ADDRESS)
@@ -114,7 +109,6 @@ public class CompanyResourceIT {
      */
     public static Company createUpdatedEntity(EntityManager em) {
         Company company = new Company()
-            .companyId(UPDATED_COMPANY_ID)
             .companyCode(UPDATED_COMPANY_CODE)
             .companyName(UPDATED_COMPANY_NAME)
             .address(UPDATED_ADDRESS)
@@ -144,7 +138,6 @@ public class CompanyResourceIT {
         List<Company> companyList = companyRepository.findAll();
         assertThat(companyList).hasSize(databaseSizeBeforeCreate + 1);
         Company testCompany = companyList.get(companyList.size() - 1);
-        assertThat(testCompany.getCompanyId()).isEqualTo(DEFAULT_COMPANY_ID);
         assertThat(testCompany.getCompanyCode()).isEqualTo(DEFAULT_COMPANY_CODE);
         assertThat(testCompany.getCompanyName()).isEqualTo(DEFAULT_COMPANY_NAME);
         assertThat(testCompany.getAddress()).isEqualTo(DEFAULT_ADDRESS);
@@ -175,24 +168,6 @@ public class CompanyResourceIT {
 
     @Test
     @Transactional
-    public void checkCompanyIdIsRequired() throws Exception {
-        int databaseSizeBeforeTest = companyRepository.findAll().size();
-        // set the field null
-        company.setCompanyId(null);
-
-        // Create the Company, which fails.
-
-        restCompanyMockMvc.perform(post("/api/companies")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(company)))
-            .andExpect(status().isBadRequest());
-
-        List<Company> companyList = companyRepository.findAll();
-        assertThat(companyList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllCompanies() throws Exception {
         // Initialize the database
         companyRepository.saveAndFlush(company);
@@ -202,7 +177,6 @@ public class CompanyResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(company.getId().intValue())))
-            .andExpect(jsonPath("$.[*].companyId").value(hasItem(DEFAULT_COMPANY_ID.toString())))
             .andExpect(jsonPath("$.[*].companyCode").value(hasItem(DEFAULT_COMPANY_CODE.toString())))
             .andExpect(jsonPath("$.[*].companyName").value(hasItem(DEFAULT_COMPANY_NAME.toString())))
             .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS.toString())))
@@ -222,7 +196,6 @@ public class CompanyResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(company.getId().intValue()))
-            .andExpect(jsonPath("$.companyId").value(DEFAULT_COMPANY_ID.toString()))
             .andExpect(jsonPath("$.companyCode").value(DEFAULT_COMPANY_CODE.toString()))
             .andExpect(jsonPath("$.companyName").value(DEFAULT_COMPANY_NAME.toString()))
             .andExpect(jsonPath("$.address").value(DEFAULT_ADDRESS.toString()))
@@ -252,7 +225,6 @@ public class CompanyResourceIT {
         // Disconnect from session so that the updates on updatedCompany are not directly saved in db
         em.detach(updatedCompany);
         updatedCompany
-            .companyId(UPDATED_COMPANY_ID)
             .companyCode(UPDATED_COMPANY_CODE)
             .companyName(UPDATED_COMPANY_NAME)
             .address(UPDATED_ADDRESS)
@@ -269,7 +241,6 @@ public class CompanyResourceIT {
         List<Company> companyList = companyRepository.findAll();
         assertThat(companyList).hasSize(databaseSizeBeforeUpdate);
         Company testCompany = companyList.get(companyList.size() - 1);
-        assertThat(testCompany.getCompanyId()).isEqualTo(UPDATED_COMPANY_ID);
         assertThat(testCompany.getCompanyCode()).isEqualTo(UPDATED_COMPANY_CODE);
         assertThat(testCompany.getCompanyName()).isEqualTo(UPDATED_COMPANY_NAME);
         assertThat(testCompany.getAddress()).isEqualTo(UPDATED_ADDRESS);

@@ -2,10 +2,8 @@ package com.cerbyt.ekds.kivs.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 /**
  * A Company.
@@ -20,10 +18,6 @@ public class Company implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
-
-    @NotNull
-    @Column(name = "company_id", nullable = false)
-    private UUID companyId;
 
     @Column(name = "company_code")
     private String companyCode;
@@ -54,19 +48,6 @@ public class Company implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public UUID getCompanyId() {
-        return companyId;
-    }
-
-    public Company companyId(UUID companyId) {
-        this.companyId = companyId;
-        return this;
-    }
-
-    public void setCompanyId(UUID companyId) {
-        this.companyId = companyId;
     }
 
     public String getCompanyCode() {
@@ -181,7 +162,6 @@ public class Company implements Serializable {
     public String toString() {
         return "Company{" +
             "id=" + getId() +
-            ", companyId='" + getCompanyId() + "'" +
             ", companyCode='" + getCompanyCode() + "'" +
             ", companyName='" + getCompanyName() + "'" +
             ", address='" + getAddress() + "'" +
