@@ -10,11 +10,9 @@ entity Company {
 }
 
 entity User {
-	company Company required,
     userName String,
     password String,
-    description String,
-    
+    description String,    
 }
 
 relationship ManyToOne {
