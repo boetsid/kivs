@@ -5,12 +5,8 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { JhiAlertService } from 'ng-jhipster';
 import { ICompany, Company } from 'app/shared/model/company.model';
 import { CompanyService } from './company.service';
-import { IUser } from 'app/core/user/user.model';
-import { UserService } from 'app/core/user/user.service';
 
 @Component({
   selector: 'jhi-company-update',
@@ -19,8 +15,6 @@ import { UserService } from 'app/core/user/user.service';
 export class CompanyUpdateComponent implements OnInit {
   isSaving: boolean;
 
-  users: IUser[];
-
   editForm = this.fb.group({
     id: [],
     companyCode: [],
@@ -28,30 +22,16 @@ export class CompanyUpdateComponent implements OnInit {
     address: [],
     contactPerson: [],
     phoneNumber: [],
-    active: [],
-    companyId: []
+    active: []
   });
 
-  constructor(
-    protected jhiAlertService: JhiAlertService,
-    protected companyService: CompanyService,
-    protected userService: UserService,
-    protected activatedRoute: ActivatedRoute,
-    private fb: FormBuilder
-  ) {}
+  constructor(protected companyService: CompanyService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
 
   ngOnInit() {
     this.isSaving = false;
     this.activatedRoute.data.subscribe(({ company }) => {
       this.updateForm(company);
     });
-    this.userService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IUser[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IUser[]>) => response.body)
-      )
-      .subscribe((res: IUser[]) => (this.users = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
   updateForm(company: ICompany) {
@@ -62,8 +42,7 @@ export class CompanyUpdateComponent implements OnInit {
       address: company.address,
       contactPerson: company.contactPerson,
       phoneNumber: company.phoneNumber,
-      active: company.active,
-      companyId: company.companyId
+      active: company.active
     });
   }
 
@@ -90,8 +69,7 @@ export class CompanyUpdateComponent implements OnInit {
       address: this.editForm.get(['address']).value,
       contactPerson: this.editForm.get(['contactPerson']).value,
       phoneNumber: this.editForm.get(['phoneNumber']).value,
-      active: this.editForm.get(['active']).value,
-      companyId: this.editForm.get(['companyId']).value
+      active: this.editForm.get(['active']).value
     };
   }
 
@@ -106,12 +84,5 @@ export class CompanyUpdateComponent implements OnInit {
 
   protected onSaveError() {
     this.isSaving = false;
-  }
-  protected onError(errorMessage: string) {
-    this.jhiAlertService.error(errorMessage, null, null);
-  }
-
-  trackUserById(index: number, item: IUser) {
-    return item.id;
   }
 }
