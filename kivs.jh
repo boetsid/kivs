@@ -8,13 +8,9 @@ entity Company {
     active Boolean
 }
 
-entity User {
+entity User1 {
     userName String,
     password String,
     description String,
     
-}
-
-relationship ManyToOne {
-  Company{companyId} to User
 }
