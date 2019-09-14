@@ -1,5 +1,3 @@
-import { IUser } from 'app/core/user/user.model';
-
 export interface ICompany {
   id?: number;
   companyCode?: string;
@@ -8,7 +6,6 @@ export interface ICompany {
   contactPerson?: string;
   phoneNumber?: string;
   active?: boolean;
-  companyId?: IUser;
 }
 
 export class Company implements ICompany {
@@ -19,8 +16,7 @@ export class Company implements ICompany {
     public address?: string,
     public contactPerson?: string,
     public phoneNumber?: string,
-    public active?: boolean,
-    public companyId?: IUser
+    public active?: boolean
   ) {
     this.active = this.active || false;
   }

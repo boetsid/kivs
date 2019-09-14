@@ -7,6 +7,10 @@ import { RouterModule } from '@angular/router';
       {
         path: 'company',
         loadChildren: () => import('./company/company.module').then(m => m.KivsCompanyModule)
+      },
+      {
+        path: 'user-1',
+        loadChildren: () => import('./user-1/user-1.module').then(m => m.KivsUser1Module)
       }
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ])

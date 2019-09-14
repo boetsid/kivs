@@ -1,5 +1,4 @@
 package com.cerbyt.ekds.kivs.domain;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
@@ -36,10 +35,6 @@ public class Company implements Serializable {
 
     @Column(name = "active")
     private Boolean active;
-
-    @ManyToOne
-    @JsonIgnoreProperties("companies")
-    private User companyId;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -126,19 +121,6 @@ public class Company implements Serializable {
 
     public void setActive(Boolean active) {
         this.active = active;
-    }
-
-    public User getCompanyId() {
-        return companyId;
-    }
-
-    public Company companyId(User user) {
-        this.companyId = user;
-        return this;
-    }
-
-    public void setCompanyId(User user) {
-        this.companyId = user;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

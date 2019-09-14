@@ -21,8 +21,7 @@
       "address": "Address",
       "contactPerson": "Contact Person",
       "phoneNumber": "Phone Number",
-      "active": "Active",
-      "companyId": "Company Id"
+      "active": "Active"
     }
   }
 }
