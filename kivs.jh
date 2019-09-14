@@ -12,8 +12,7 @@ entity Company {
 entity User {
     userName String,
     password String,
-    description String,
-    
+    description String,    
 }
 
 relationship ManyToOne {
