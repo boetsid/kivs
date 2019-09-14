@@ -1,0 +1,22 @@
+
+entity Company {
+	companyId UUID required,
+    companyCode String,
+    companyName String,
+    address String,
+    contactPerson String,
+    phoneNumber String,
+    active Boolean
+}
+
+entity User {
+	company Company required,
+    userName String,
+    password String,
+    description String,
+    
+}
+
+relationship ManyToOne {
+  Company{companyId} to User
+}
