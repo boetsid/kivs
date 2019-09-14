@@ -16,7 +16,6 @@
       "detail": {
         "title": "Company"
       },
-      "companyId": "Company Id",
       "companyCode": "Company Code",
       "companyName": "Company Name",
       "address": "Address",

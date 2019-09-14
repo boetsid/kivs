@@ -2,7 +2,6 @@ import { IUser } from 'app/core/user/user.model';
 
 export interface ICompany {
   id?: number;
-  companyId?: string;
   companyCode?: string;
   companyName?: string;
   address?: string;
@@ -15,7 +14,6 @@ export interface ICompany {
 export class Company implements ICompany {
   constructor(
     public id?: number,
-    public companyId?: string,
     public companyCode?: string,
     public companyName?: string,
     public address?: string,
