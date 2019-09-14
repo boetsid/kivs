@@ -1,6 +1,5 @@
 
 entity Company {
-	companyId UUID required,
     companyCode String,
     companyName String,
     address String,
@@ -12,7 +11,8 @@ entity Company {
 entity User {
     userName String,
     password String,
-    description String,    
+    description String,
+    
 }
 
 relationship ManyToOne {
